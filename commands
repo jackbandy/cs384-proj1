@@ -1,0 +1,16 @@
+Useful Commands for 384 Project 1
+=================================
+
+wget --mirror --page-requisites --adjust-extension --no-parent --convert-links --directory-prefix=hilissues https://marcorubio.com/issues/
+
+for file in */index.html; do mv "$file" "$(dirname "$file").html"; done
+
+for file in *.html; do sed -n '/<p/,/<\/p>/p' $file >> $file.ptags; done
+
+for file in *.html; do sed -n '/<body/,/<\/body>/p' $file >> $file.ptags; done
+
+for file in *.ptags; do sed '/<p.*/,/.*>/d' $file | sed -e 's/<[^>]*>//g' >> $file.text; done
+
+for file in *.ptags; do sed -e 's/<[^>]*>//g' $file >> $file.text; done
+
+for file in *.text; do mv "$file" "${file%.html.ptags.text}.txt"; done
